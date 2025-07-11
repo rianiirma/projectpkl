@@ -1,8 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -23,6 +20,14 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        } elseif ($user->role === 'guru') {
+            return redirect()->route('guru.dashboard');
+        } elseif ($user->role === 'siswa') {
+            return redirect()->route('siswa.dashboard');
+        }
         return view('home');
     }
 }

@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\User;
-use Illuminate\Supporrt\Facades\Hash;
+use Illuminate\Database\Seeder;
 
 class UserTableSeeder extends Seeder
 {
@@ -14,13 +13,24 @@ class UserTableSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'Admin Utama',
+            'name' => 'admin',
             'email' => 'admin@gmail.com',
             'is_admin' => true,
-            'password' => bcrypt('password'),
+            'password' => bcrypt('12345678'),
             'role' => 'admin',
         ]);
-
+        User::create([
+            'name' => 'irma',
+            'email' => 'irma@gmail.com',
+            'password' => bcrypt('12345678'),
+            'role' => 'siswa',
+        ]);
+        User::create([
+            'name' => 'feby',
+            'email' => 'feby@admin.com',
+            'password' => bcrypt('12345678'),
+            'role' => 'guru',
+        ]);
 
     }
 }

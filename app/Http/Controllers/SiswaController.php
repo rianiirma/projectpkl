@@ -15,7 +15,7 @@ class SiswaController extends Controller
     public function index()
     {
         $siswas = Siswa::with(['kelas', 'user'])->get();
-        return view('siswa.index', compact('siswas'));
+        return view('Admin/siswa.index', compact('siswas'));
 
     }
 
@@ -26,7 +26,7 @@ class SiswaController extends Controller
     {
         $users = User::where('role', 'siswa')->get();
         $kelasList = Kelas::all();
-        return view('siswa.create', compact('users', 'kelasList'));
+        return view('Admin/siswa.create', compact('users', 'kelasList'));
 
     }
 
@@ -54,7 +54,7 @@ class SiswaController extends Controller
 
         Siswa::create($data);
 
-        return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil ditambahkan.');
+        return redirect()->route('Admin/siswa.index')->with('success', 'Data siswa berhasil ditambahkan.');
     }
 
     /**
@@ -63,7 +63,7 @@ class SiswaController extends Controller
     public function show(string $id)
     {
         $siswa = Siswa::with(['kelas', 'user'])->findOrFail($id);
-        return view('siswa.show', compact('siswa'));
+        return view('Admin/siswa.show', compact('siswa'));
 
     }
 
@@ -75,7 +75,7 @@ class SiswaController extends Controller
         $siswa = Siswa::findOrFail($id);
         $users = User::where('role', 'siswa')->get();
         $kelasList = Kelas::all();
-        return view('siswa.edit', compact('siswa', 'users', 'kelasList'));
+        return view('Admin/siswa.edit', compact('siswa', 'users', 'kelasList'));
 
     }
 
@@ -110,7 +110,7 @@ class SiswaController extends Controller
 
         $siswa->update($data);
 
-        return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil diperbarui.');
+        return redirect()->route('Admin/siswa.index')->with('success', 'Data siswa berhasil diperbarui.');
 
     }
 
@@ -127,7 +127,7 @@ class SiswaController extends Controller
 
         $siswa->delete();
 
-        return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil dihapus.');
+        return redirect()->route('Admin/siswa.index')->with('success', 'Data siswa berhasil dihapus.');
 
     }
 }

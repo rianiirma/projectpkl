@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class Guru extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id','id_kelas','nama','no_telepon','foto','mapel_utama'];
+    protected $fillable = ['id','id_user','id_kelas','nama','no_telepon','foto','mapel_utama'];
     public $timestamp = true;
 
     public function kelas()

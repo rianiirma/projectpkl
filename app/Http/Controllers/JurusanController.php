@@ -13,7 +13,7 @@ class JurusanController extends Controller
     public function index()
     {
         $jurusans = Jurusan::all();
-        return view('jurusan.index', compact('jurusans'));
+        return view('Admin/jurusan.index', compact('jurusans'));
     }
 
     /**
@@ -21,7 +21,7 @@ class JurusanController extends Controller
      */
     public function create()
     {
-        return view('jurusan.create');
+        return view('Admin/jurusan.create');
     }
 
     /**
@@ -37,7 +37,7 @@ class JurusanController extends Controller
             'nama' => $request->nama,
         ]);
 
-        return redirect()->route('jurusan.index')->with('success', 'Jurusan berhasil ditambahkan.');
+        return redirect()->route('Admin/jurusan.index')->with('success', 'Jurusan berhasil ditambahkan.');
     }
 
     /**
@@ -46,7 +46,7 @@ class JurusanController extends Controller
     public function edit($id)
     {
         $jurusan = Jurusan::findOrFail($id);
-        return view('jurusan.edit', compact('jurusan'));
+        return view('Admin/jurusan.edit', compact('jurusan'));
     }
 
     /**
@@ -64,7 +64,13 @@ class JurusanController extends Controller
             'nama' => $request->nama,
         ]);
 
-        return redirect()->route('jurusan.index')->with('success', 'Jurusan berhasil diperbarui.');
+        return redirect()->route('Admin/jurusan.index')->with('success', 'Jurusan berhasil diperbarui.');
+    }
+
+    public function show($id)
+    {
+        $jurusan = Jurusan::findOrFail($id);
+        return view('Admin/jurusan.show', compact('jurusan'));
     }
 
     /**
@@ -75,6 +81,6 @@ class JurusanController extends Controller
         $jurusan = Jurusan::findOrFail($id);
         $jurusan->delete();
 
-        return redirect()->route('jurusan.index')->with('success', 'Jurusan berhasil dihapus.');
+        return redirect()->route('Admin/jurusan.index')->with('success', 'Jurusan berhasil dihapus.');
     }
 }

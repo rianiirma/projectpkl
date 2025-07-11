@@ -2,65 +2,86 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Guru;
-use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class GuruController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $guru = Guru::all();
+        return view('Admin/guru.index', compact('guru'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('Admin/guru.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'id_user' => 'required|integer',
+            'id_kelas' => 'required|integer',
+            'nama' => 'required|string|max:255',
+            'no_telepon' => 'required|string|max:15',
+            'foto' => 'nullable|image|max:2048',
+            'mapel_utama' => 'required|string|max:100',
+        ]);
+
+        $data = $request->all();
+
+        if ($request->hasFile('foto')) {
+            $data['foto'] = $request->file('foto')->store('foto_guru', 'public');
+        }
+
+        Guru::create($data);
+        return redirect()->route('Admin/guru.index')->with('success', 'Guru berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Guru $guru)
     {
-        //
+        return view('Admin/guru.show', compact('guru'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Guru $guru)
     {
-        //
+        return view('Admin/guru.edit', compact('guru'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Guru $guru)
     {
-        //
+        $request->validate([
+            'id_user' => 'required|integer',
+            'id_kelas' => 'required|integer',
+            'nama' => 'required|string|max:255',
+            'no_telepon' => 'required|string|max:15',
+            'foto' => 'nullable|image|max:2048',
+            'mapel_utama' => 'required|string|max:100',
+        ]);
+
+        $data = $request->all();
+
+        if ($request->hasFile('foto')) {
+            // hapus foto lama jika ada
+            if ($guru->foto) {
+                Storage::disk('public')->delete($guru->foto);
+            }
+            $data['foto'] = $request->file('foto')->store('foto_guru', 'public');
+        }
+
+        $guru->update($data);
+        return redirect()->route('Admin/guru.index')->with('success', 'Guru berhasil diupdate');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Guru $guru)
     {
-        //
+        if ($guru->foto) {
+            Storage::disk('public')->delete($guru->foto);
+        }
+
+        $guru->delete();
+        return redirect()->route('Admin/guru.index')->with('success', 'Guru berhasil dihapus');
     }
 }
