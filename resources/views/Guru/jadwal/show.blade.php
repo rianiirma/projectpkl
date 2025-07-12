@@ -15,6 +15,6 @@
         <li class="list-group-item"><strong>Ruang:</strong> {{ $jadwal->ruang }}</li>
     </ul>
 
-    <a href="{{ route('jadwal.index') }}" class="btn btn-secondary mt-3">Kembali</a>
+    <a href="{{ route('guru.jadwal.index') }}" class="btn btn-secondary mt-3">Kembali</a>
 </div>
 @endsection

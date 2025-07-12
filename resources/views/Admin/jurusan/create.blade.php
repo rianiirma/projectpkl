@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 
-@section('title', 'Tambah Jurusan')
-
 @section('content')
 <div class="container">
     <h1 class="mb-4">Tambah Jurusan</h1>
@@ -17,7 +15,7 @@
         </div>
     @endif
 
-    <form action="{{ route('jurusan.store') }}" method="POST">
+    <form action="{{ route('admin.jurusan.store') }}" method="POST">
         @csrf
 
         <div class="mb-3">
@@ -25,7 +23,7 @@
             <input type="text" name="nama" class="form-control" required>
         </div>
 
-        <a href="{{ route('jurusan.index') }}" class="btn btn-secondary">Kembali</a>
+        <a href="{{ route('admin.jurusan.index') }}" class="btn btn-secondary">Kembali</a>
         <button type="submit" class="btn btn-primary">Simpan</button>
     </form>
 </div>

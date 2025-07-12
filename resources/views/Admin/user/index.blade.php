@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h2>Daftar Pengguna</h2>
-    <a href="{{ route('user.create') }}" class="btn btn-primary mb-3">+ Tambah Pengguna</a>
+    <a href="{{ route('admin.user.create') }}" class="btn btn-primary mb-3">+ Tambah Pengguna</a>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -15,7 +15,7 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>No</th>
                     <th>Nama</th>
                     <th>Email</th>
                     <th>Role</th>
@@ -29,16 +29,15 @@
                 @foreach ($users as $u)
                     <tr>
                         <td>{{ $u->id }}</td>
-                        <td>{{ $u->nama }}</td>
+                        <td>{{ $u->name }}</td>
                         <td>{{ $u->email }}</td>
                         <td>{{ $u->role }}</td>
                         <td>{{ $u->email_verified_at }}</td>
                         <td>{{ $u->password }}</td>
                         <td>{{ $u->remember_token }}</td>
                         <td>
-                            <a href="{{ route('user.edit', $u->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <a href="{{ route('user.show', $u->id) }}" class="btn btn-info btn-sm">Lihat</a>
-                            <form action="{{ route('user.destroy', $u->id) }}" method="POST" style="display:inline;">
+                            <a href="{{ route('admin.user.edit', $u->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ route('admin.user.destroy', $u->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus pengguna ini?')">Hapus</button>

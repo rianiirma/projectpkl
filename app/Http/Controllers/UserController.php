@@ -11,12 +11,12 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('Admin/user.index', compact('users'));
+        return view('admin.user.index', compact('users'));
     }
 
     public function create()
     {
-        return view('Admin/user.create');
+        return view('admin.user.create');
     }
 
     public function store(Request $request)
@@ -32,17 +32,17 @@ class UserController extends Controller
 
         User::create($validated);
 
-        return redirect()->route('Admin/user.index')->with('success', 'Pengguna berhasil ditambahkan.');
+        return redirect()->route('admin.user.index')->with('success', 'Pengguna berhasil ditambahkan.');
     }
 
     public function show(User $user)
     {
-        return view('Admin/user.show', compact('user'));
+        return view('admin.user.show', compact('user'));
     }
 
     public function edit(User $user)
     {
-        return view('Admin/user.edit', compact('user'));
+        return view('admin.user.edit', compact('user'));
     }
 
     public function update(Request $request, User $user)
@@ -62,12 +62,12 @@ class UserController extends Controller
 
         $user->update($validated);
 
-        return redirect()->route('Admin/user.index')->with('success', 'Pengguna berhasil diperbarui.');
+        return redirect()->route('admin.user.index')->with('success', 'Pengguna berhasil diperbarui.');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('Admin/user.index')->with('success', 'Pengguna berhasil dihapus.');
+        return redirect()->route('admin.user.index')->with('success', 'Pengguna berhasil dihapus.');
     }
 }

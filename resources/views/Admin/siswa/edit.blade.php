@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 
-@section('title', 'Edit Data Siswa')
-
 @section('content')
 <div class="container">
     <h1 class="mb-4">Edit Data Siswa</h1>
@@ -17,7 +15,7 @@
         </div>
     @endif
 
-    <form action="{{ route('siswa.update', $siswa->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.siswa.update', $siswa->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -82,7 +80,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-        <a href="{{ route('siswa.index') }}" class="btn btn-secondary">Kembali</a>
+        <a href="{{ route('admin.siswa.index') }}" class="btn btn-secondary">Kembali</a>
     </form>
 </div>
 @endsection

@@ -17,7 +17,7 @@
         </div>
     @endif
 
-    <form action="{{ route('jeniskeuangan.update', $jeniskeuangan->id) }}" method="POST">
+    <form action="{{ route('admin.jeniskeuangan.update', $jeniskeuangan->id) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -31,7 +31,7 @@
             <textarea name="deskripsi" class="form-control" rows="3" required>{{ $jeniskeuangan->deskripsi }}</textarea>
         </div>
 
-        <a href="{{ route('jeniskeuangan.index') }}" class="btn btn-secondary">Batal</a>
+        <a href="{{ route('admin.jeniskeuangan.index') }}" class="btn btn-secondary">Batal</a>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
 </div>

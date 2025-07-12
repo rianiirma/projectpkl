@@ -15,14 +15,13 @@
         <table class="table table-bordered">
             <thead>
                 <tr>    
-                    <th>ID</th>
-                    <th>ID Kelas</th>
-                    <th>ID Guru</th>
-                    <th>ID Mapel</th>
+                    <th>NO</th>
+                    <th>Nama Kelas</th>
+                    <th>Nama Guru</th>
+                    <th>Nama Mapel</th>
                     <th>Hari</th>
                     <th>Waktu Mulai</th>
                     <th>Waktu Selesai</th>
-                    <th>Ruang</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -36,10 +35,8 @@
                         <td>{{ $j->hari }}</td>
                         <td>{{ $j->waktu_mulai }}</td>
                         <td>{{ $j->waktu_selesai }}</td>
-                        <td>{{ $j->ruang }}</td>
                         <td>
                             <a href="{{ route('admin.jadwal.edit', $j->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <a href="{{ route('admin.jadwal.show', $j->id) }}" class="btn btn-info btn-sm">Lihat</a>
                             <form action="{{ route('admin.jadwal.destroy', $j->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')

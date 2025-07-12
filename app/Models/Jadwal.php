@@ -2,24 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
+use Illuminate\Database\Eloquent\Model;
 
 class Jadwal extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-    'id', 
-    'id_kelas', 
-    'id_guru', 
-    'id_mapel', 
-    'hari', 
-    'waktu_mulai', 
-    'waktu_selesai', 
-    'ruang '
-];
+        'id',
+        'id_kelas',
+        'id_guru',
+        'id_mapel',
+        'hari',
+        'waktu_mulai',
+        'waktu_selesai',
+    ];
     public $timestamp = true;
 
     public function absensi()

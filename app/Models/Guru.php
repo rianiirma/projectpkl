@@ -10,7 +10,7 @@ class Guru extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id','id_user','id_kelas','nama','no_telepon','foto','mapel_utama'];
+    protected $fillable = ['id','id_user','nama','no_telepon','foto','mapel_utama'];
     public $timestamp = true;
 
     public function kelas()

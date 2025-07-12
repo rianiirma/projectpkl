@@ -10,12 +10,12 @@ class AbsensiController extends Controller
     public function index()
     {
         $absensi = Absensi::all();
-        return view('Guru/absensi.index', compact('absensi'));
+        return view('guru.absensi.index', compact('absensi'));
     }
 
     public function create()
     {
-        return view('Guru/absensi.create');
+        return view('guru.absensi.create');
     }
 
     public function store(Request $request)
@@ -29,17 +29,17 @@ class AbsensiController extends Controller
 
         Absensi::create($request->all());
 
-        return redirect()->route('Guru/absensi.index')->with('success', 'Data absensi berhasil ditambahkan.');
+        return redirect()->route('guru.absensi.index')->with('success', 'Data absensi berhasil ditambahkan.');
     }
 
     public function show(Absensi $absensi)
     {
-        return view('Guru/absensi.show', compact('absensi'));
+        return view('guru.absensi.show', compact('absensi'));
     }
 
     public function edit(Absensi $absensi)
     {
-        return view('Guru/absensi.edit', compact('absensi'));
+        return view('guru.absensi.edit', compact('absensi'));
     }
 
     public function update(Request $request, Absensi $absensi)
@@ -53,12 +53,12 @@ class AbsensiController extends Controller
 
         $absensi->update($request->all());
 
-        return redirect()->route('Guru/absensi.index')->with('success', 'Data absensi berhasil diperbarui.');
+        return redirect()->route('guru.absensi.index')->with('success', 'Data absensi berhasil diperbarui.');
     }
 
     public function destroy(Absensi $absensi)
     {
         $absensi->delete();
-        return redirect()->route('Guru/absensi.index')->with('success', 'Data absensi berhasil dihapus.');
+        return redirect()->route('guru.absensi.index')->with('success', 'Data absensi berhasil dihapus.');
     }
 }

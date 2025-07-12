@@ -4,86 +4,61 @@ namespace App\Http\Controllers;
 
 use App\Models\Semester;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class SemesterController extends Controller
 {
     public function index()
     {
-        $semester = Semester::all();
-        return view('Admin/semester.index', compact('semester'));
+        $semesters = Semester::all();
+        return view('admin.semester.index', compact('semesters'));
     }
 
     public function create()
     {
-        return view('Admin/semester.create');
+        return view('admin.semester.create');
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'id_user' => 'required',
-            'id_kelas' => 'required',
-            'nisn' => 'required',
-            'nama' => 'required',
-            'alamat' => 'required',
-            'jenis_kelamin' => 'required',
-            'no_telepon' => 'required',
-            'foto' => 'nullable|image|max:2048',
+        $request->validate([
+            'tahun_ajaran' => 'required|string|max:255',
         ]);
 
-        if ($request->hasFile('foto')) {
-            $validated['foto'] = $request->file('foto')->store('foto', 'public');
-        }
+        Semester::create($request->only('tahun_ajaran'));
 
-        Semester::create($validated);
-
-        return redirect()->route('Admin/semester.index')->with('success', 'Data berhasil ditambahkan.');
+        return redirect()->route('admin.semester.index')->with('success', 'Semester berhasil ditambahkan.');
     }
 
-    public function show(Semester $semester)
+    public function show($id)
     {
-        return view('Admin/semester.show', compact('semester'));
+        $semester = Semester::findOrFail($id);
+        return view('admin.semester.show', compact('semester'));
     }
 
-    public function edit(Semester $semester)
+    public function edit($id)
     {
-        return view('Admin/semester.edit', compact('semester'));
+        $semester = Semester::findOrFail($id);
+        return view('admin.semester.edit', compact('semester'));
     }
 
-    public function update(Request $request, Semester $semester)
+    public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'id_user' => 'required',
-            'id_kelas' => 'required',
-            'nisn' => 'required',
-            'nama' => 'required',
-            'alamat' => 'required',
-            'jenis_kelamin' => 'required',
-            'no_telepon' => 'required',
-            'foto' => 'nullable|image|max:2048',
+        $request->validate([
+            'tahun_ajaran' => 'required|string|max:255',
         ]);
 
-        if ($request->hasFile('foto')) {
-            if ($semester->foto) {
-                Storage::disk('public')->delete($semester->foto);
-            }
-            $validated['foto'] = $request->file('foto')->store('foto', 'public');
-        }
+        $semester = Semester::findOrFail($id);
+        $semester->update($request->only('tahun_ajaran'));
 
-        $semester->update($validated);
-
-        return redirect()->route('Admin/semester.index')->with('success', 'Data berhasil diupdate.');
+        return redirect()->route('admin.semester.index')->with('success', 'Semester berhasil diupdate.');
     }
 
-    public function destroy(Semester $semester)
+    public function destroy($id)
     {
-        if ($semester->foto) {
-            Storage::disk('public')->delete($semester->foto);
-        }
-
+        $semester = Semester::findOrFail($id);
         $semester->delete();
 
-        return redirect()->route('Admin/semester.index')->with('success', 'Data berhasil dihapus.');
+        return redirect()->route('admin.semester.index')->with('success', 'Semester berhasil dihapus.');
     }
 }
+

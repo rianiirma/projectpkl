@@ -11,13 +11,13 @@ class JenisKeuanganController extends Controller
     public function index()
     {
         $jeniskeuangans = JenisKeuangan::all();
-        return view('Admin/jeniskeuangan.index', compact('jeniskeuangans'));
+        return view('admin.jeniskeuangan.index', compact('jeniskeuangans'));
     }
 
     // Tampilkan form untuk tambah data
     public function create()
     {
-        return view('Admin/jeniskeuangan.create');
+        return view('admin.jeniskeuangan.create');
     }
 
     // Simpan data baru
@@ -30,19 +30,19 @@ class JenisKeuanganController extends Controller
 
         JenisKeuangan::create($request->all());
 
-        return redirect()->route('Admin/jeniskeuangan.index')->with('success', 'Data berhasil ditambahkan.');
+        return redirect()->route('admin.jeniskeuangan.index')->with('success', 'Data berhasil ditambahkan.');
     }
 
     // Tampilkan detail
     public function show(JenisKeuangan $jeniskeuangan)
     {
-        return view('Admin/jeniskeuangan.show', compact('jeniskeuangan'));
+        return view('admin.jeniskeuangan.show', compact('jeniskeuangan'));
     }
 
     // Tampilkan form edit
     public function edit(JenisKeuangan $jeniskeuangan)
     {
-        return view('Admin/jeniskeuangan.edit', compact('jeniskeuangan'));
+        return view('admin.jeniskeuangan.edit', compact('jeniskeuangan'));
     }
 
     // Update data
@@ -55,7 +55,7 @@ class JenisKeuanganController extends Controller
 
         $jeniskeuangan->update($request->all());
 
-        return redirect()->route('Admin/jeniskeuangan.index')->with('success', 'Data berhasil diupdate.');
+        return redirect()->route('admin.jeniskeuangan.index')->with('success', 'Data berhasil diupdate.');
     }
 
     // Hapus data
@@ -63,6 +63,6 @@ class JenisKeuanganController extends Controller
     {
         $jeniskeuangan->delete();
 
-        return redirect()->route('Admin/jeniskeuangan.index')->with('success', 'Data berhasil dihapus.');
+        return redirect()->route('admin.jeniskeuangan.index')->with('success', 'Data berhasil dihapus.');
     }
 }

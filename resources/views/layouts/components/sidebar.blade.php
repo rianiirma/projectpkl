@@ -81,47 +81,47 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="{{ route('siswa.index')}}" class="menu-link">
+                  <a href="{{ route('admin.siswa.index')}}" class="menu-link">
                     <div data-i18n="Siswa">Siswa</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="{{ route('guru.index')}}" class="menu-link">
+                  <a href="{{ route('admin.guru.index')}}" class="menu-link">
                     <div data-i18n="Guru">Guru</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="{{ route('user.index')}}" class="menu-link">
+                  <a href="{{ route('admin.user.index')}}" class="menu-link">
                     <div data-i18n="User">User</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="{{ route('jeniskeuangan.index')}}" class="menu-link">
+                  <a href="{{ route('admin.jeniskeuangan.index')}}" class="menu-link">
                     <div data-i18n="Jeniskeuangan">Jenis keuangan</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="{{ route('mapel.index')}}" class="menu-link">
+                  <a href="{{ route('admin.mapel.index')}}" class="menu-link">
                     <div data-i18n="Mapel">Mapel</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="{{ route('jurusan.index')}}" class="menu-link">
+                  <a href="{{ route('admin.jurusan.index')}}" class="menu-link">
                     <div data-i18n="Jurussan">Jurusan</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="{{ route('kelas.index')}}" class="menu-link">
+                  <a href="{{ route('admin.kelas.index')}}" class="menu-link">
                     <div data-i18n="Kelas">Kelas</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="{{ route('semester.index')}}" class="menu-link">
+                  <a href="{{ route('admin.semester.index')}}" class="menu-link">
                     <div data-i18n="Semester">Semester</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="{{ route('jadwal.index')}}" class="menu-link">
+                  <a href="{{ route('admin.jadwal.index')}}" class="menu-link">
                     <div data-i18n="Jadwal">Jadwal</div>
                   </a>
                 </li>

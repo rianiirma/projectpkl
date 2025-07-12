@@ -25,7 +25,6 @@ return new class extends Migration
             $table->enum('hari', ['senin','selasa','rabu','kamis','jumat','sabtu']);
             $table->time('waktu_mulai');
             $table->time('waktu_selesai');
-            $table->string('ruang');
             $table->timestamps();
         });
     }

@@ -3,16 +3,12 @@
 @section('content')
 <div class="container mt-4">
     <h2>Edit Guru</h2>
-    <form action="{{ route('guru.update', $guru->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.guru.update', $guru->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="mb-3">
-            <label>ID User</label>
+            <label>Nama User</label>
             <input type="number" name="id_user" class="form-control" value="{{ $guru->id_user }}" required>
-        </div>
-        <div class="mb-3">
-            <label>ID Kelas</label>
-            <input type="number" name="id_kelas" class="form-control" value="{{ $guru->id_kelas }}" required>
         </div>
         <div class="mb-3">
             <label>Nama</label>

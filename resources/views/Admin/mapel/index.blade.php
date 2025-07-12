@@ -10,12 +10,12 @@
         </div>
     @endif
 
-    <a href="{{ route('mapel.create') }}" class="btn btn-primary mb-3">+ Tambah Mapel</a>
+    <a href="{{ route('admin.mapel.create') }}" class="btn btn-primary mb-3">+ Tambah Mapel</a>
 
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>No</th>
                 <th>Nama</th>
                 <th>Aksi</th>
             </tr>
@@ -26,9 +26,8 @@
                     <td>{{ $mapel->id }}</td>
                     <td>{{ $mapel->nama }}</td>
                     <td>
-                        <a href="{{ route('mapel.edit', $mapel->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                        <a href="{{ route('mapel.show', $mapel->id) }}" class="btn btn-sm btn-success">Show</a>
-                        <form action="{{ route('mapel.destroy', $mapel->id) }}" method="POST" style="display: inline-block;">
+                        <a href="{{ route('admin.mapel.edit', $mapel->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                        <form action="{{ route('admin.mapel.destroy', $mapel->id) }}" method="POST" style="display: inline-block;">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-danger" onclick="return confirm('Yakin hapus mapel ini?')">Hapus</button>

@@ -3,15 +3,11 @@
 @section('content')
 <div class="container mt-4">
     <h2>Tambah Guru</h2>
-    <form action="{{ route('guru.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.guru.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
-            <label>ID User</label>
+            <label>Nama User</label>
             <input type="number" name="id_user" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label>ID Kelas</label>
-            <input type="number" name="id_kelas" class="form-control" required>
         </div>
         <div class="mb-3">
             <label>Nama</label>

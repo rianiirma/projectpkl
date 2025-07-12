@@ -10,12 +10,12 @@ class PenilaianController extends Controller
     public function index()
     {
         $penilaian = Penilaian::all();
-        return view('Guru/penilaian.index', compact('penilaian'));
+        return view('guru.penilaian.index', compact('penilaian'));
     }
 
     public function create()
     {
-        return view('Guru/penilaian.create');
+        return view('guru.penilaian.create');
     }
 
     public function store(Request $request)
@@ -29,17 +29,17 @@ class PenilaianController extends Controller
         ]);
 
         Penilaian::create($request->all());
-        return redirect()->route('Guru/penilaian.index')->with('success', 'Data penilaian berhasil ditambahkan.');
+        return redirect()->route('guru.penilaian.index')->with('success', 'Data penilaian berhasil ditambahkan.');
     }
 
     public function show(Penilaian $penilaian)
     {
-        return view('Guru/penilaian.show', compact('penilaian'));
+        return view('guru.penilaian.show', compact('penilaian'));
     }
 
     public function edit(Penilaian $penilaian)
     {
-        return view('Guru/penilaian.edit', compact('penilaian'));
+        return view('guru.penilaian.edit', compact('penilaian'));
     }
 
     public function update(Request $request, Penilaian $penilaian)
@@ -53,12 +53,12 @@ class PenilaianController extends Controller
         ]);
 
         $penilaian->update($request->all());
-        return redirect()->route('Guru/penilaian.index')->with('success', 'Data penilaian berhasil diupdate.');
+        return redirect()->route('guru.penilaian.index')->with('success', 'Data penilaian berhasil diupdate.');
     }
 
     public function destroy(Penilaian $penilaian)
     {
         $penilaian->delete();
-        return redirect()->route('Guru/penilaian.index')->with('success', 'Data penilaian berhasil dihapus.');
+        return redirect()->route('guru.penilaian.index')->with('success', 'Data penilaian berhasil dihapus.');
     }
 }

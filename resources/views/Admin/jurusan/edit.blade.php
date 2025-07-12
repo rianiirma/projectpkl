@@ -17,7 +17,7 @@
         </div>
     @endif
 
-    <form action="{{ route('jurusan.update', $jurusan->id) }}" method="POST">
+    <form action="{{ route('admin.jurusan.update', $jurusan->id) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -26,7 +26,7 @@
             <input type="text" name="nama" class="form-control" value="{{ $jurusan->nama }}" required>
         </div>
 
-        <a href="{{ route('jurusan.index') }}" class="btn btn-secondary">Batal</a>
+        <a href="{{ route('admin.jurusan.index') }}" class="btn btn-secondary">Batal</a>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
 </div>

@@ -8,17 +8,17 @@
         @csrf
 
         <div class="form-group">
-            <label>ID Kelas</label>
+            <label>Nama Kelas</label>
             <input type="text" name="id_kelas" class="form-control" required>
         </div>
 
         <div class="form-group">
-            <label>ID Guru</label>
+            <label>Nama Guru</label>
             <input type="text" name="id_guru" class="form-control" required>
         </div>
 
         <div class="form-group">
-            <label>ID Mapel</label>
+            <label>Nama Mapel</label>
             <input type="text" name="id_mapel" class="form-control" required>
         </div>
 
@@ -40,11 +40,6 @@
         <div class="form-group">
             <label>Waktu Selesai</label>
             <input type="time" name="waktu_selesai" class="form-control" required>
-        </div>
-
-        <div class="form-group">
-            <label>Ruang</label>
-            <input type="text" name="ruang" class="form-control" required>
         </div>
 
         <button type="submit" class="btn btn-success mt-3">Simpan</button>

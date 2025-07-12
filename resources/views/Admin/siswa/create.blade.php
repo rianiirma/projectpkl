@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 
-@section('title', 'Tambah Data Siswa')
-
 @section('content')
 <div class="container">
     <h1 class="mb-4">Tambah Siswa</h1>
@@ -17,7 +15,7 @@
         </div>
     @endif
 
-    <form action="{{ route('siswa.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.siswa.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="mb-3">
@@ -25,7 +23,7 @@
             <select name="id_user" class="form-control" required>
                 <option value="">-- Pilih User --</option>
                 @foreach($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
+                    <option value="{{ $user->id }}">{{ $user->nama }} ({{ $user->email }})</option>
                 @endforeach
             </select>
         </div>
@@ -35,7 +33,7 @@
             <select name="id_kelas" class="form-control" required>
                 <option value="">-- Pilih Kelas --</option>
                 @foreach($kelasList as $kelas)
-                    <option value="{{ $kelas->id }}">{{ $kelas->nama_kelas }}</option>
+                    <option value="{{ $kelas->id }}">{{ $kelas->nomor_kelas }}</option>
                 @endforeach
             </select>
         </div>
@@ -75,7 +73,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Simpan</button>
-        <a href="{{ route('siswa.index') }}" class="btn btn-secondary">Kembali</a>
+        <a href="{{ route('admin.siswa.index') }}" class="btn btn-secondary">Kembali</a>
     </form>
 </div>
 @endsection

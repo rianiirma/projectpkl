@@ -4,7 +4,7 @@
 <div class="container">
     <h2>Tambah Pengguna</h2>
 
-    <form action="{{ route('user.store') }}" method="POST">
+    <form action="{{ route('admin.user.store') }}" method="POST">
         @csrf
 
         <div class="form-group">
@@ -32,7 +32,7 @@
             <input type="password" name="password" class="form-control" required>
         </div>
 
-        <a href="{{ route('user.index') }}" class="btn btn-secondary mt-3">Kembali</a>
+        <a href="{{ route('admin.user.index') }}" class="btn btn-secondary mt-3">Kembali</a>
         <button type="submit" class="btn btn-primary mt-3">Simpan</button>
     </form>
 </div>

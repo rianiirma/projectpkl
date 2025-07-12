@@ -6,7 +6,7 @@
 <div class="container">
     <h1 class="mb-4">Data Jurusan</h1>
 
-    <a href="{{ route('jurusan.create') }}" class="btn btn-primary mb-3">+ Tambah Jurusan</a>
+    <a href="{{ route('admin.jurusan.create') }}" class="btn btn-primary mb-3">+ Tambah Jurusan</a>
 
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -15,7 +15,7 @@
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
             <tr>
-                <th>ID</th>
+                <th>No</th>
                 <th>Nama Jurusan</th>
                 <th>Aksi</th>
             </tr>
@@ -26,9 +26,8 @@
                     <td>{{ $jurusan->id }}</td>
                     <td>{{ $jurusan->nama }}</td>
                     <td>
-                        <a href="{{ route('jurusan.edit', $jurusan->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                        <a href="{{ route('jurusan.show', $jurusan->id) }}" class="btn btn-sm btn-success">Show</a>
-                        <form action="{{ route('jurusan.destroy', $jurusan->id) }}" method="POST" style="display: inline-block;">
+                        <a href="{{ route('admin.jurusan.edit', $jurusan->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                        <form action="{{ route('admin.jurusan.destroy', $jurusan->id) }}" method="POST" style="display: inline-block;">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-danger" onclick="return confirm('Yakin hapus jurusan ini?')">Hapus</button>

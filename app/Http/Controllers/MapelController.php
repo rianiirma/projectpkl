@@ -11,13 +11,13 @@ class MapelController extends Controller
     public function index()
     {
         $mapels = Mapel::all(['id', 'nama']);
-        return view('Admin/mapel.index', compact('mapels'));
+        return view('admin.mapel.index', compact('mapels'));
     }
 
     // Form tambah mapel
     public function create()
     {
-        return view('Admin/mapel.create');
+        return view('admin.mapel.create');
     }
 
     // Simpan mapel baru
@@ -31,19 +31,19 @@ class MapelController extends Controller
             'nama' => $request->nama,
         ]);
 
-        return redirect()->route('Admin/mapel.index')->with('success', 'Mapel berhasil ditambahkan.');
+        return redirect()->route('admin.mapel.index')->with('success', 'Mapel berhasil ditambahkan.');
     }
 
     // Tampilkan detail mapel
     public function show(Mapel $mapel)
     {
-        return view('Admin/mapel.show', compact('mapel'));
+        return view('admin.mapel.show', compact('mapel'));
     }
 
     // Form edit mapel
     public function edit(Mapel $mapel)
     {
-        return view('Admin/mapel.edit', compact('mapel'));
+        return view('admin.mapel.edit', compact('mapel'));
     }
 
     // Update mapel
@@ -57,13 +57,13 @@ class MapelController extends Controller
             'nama' => $request->nama,
         ]);
 
-        return redirect()->route('Admin/mapel.index')->with('success', 'Mapel berhasil diperbarui.');
+        return redirect()->route('admin.mapel.index')->with('success', 'Mapel berhasil diperbarui.');
     }
 
     // Hapus mapel
     public function destroy(Mapel $mapel)
     {
         $mapel->delete();
-        return redirect()->route('Admin/mapel.index')->with('success', 'Mapel berhasil dihapus.');
+        return redirect()->route('admin.mapel.index')->with('success', 'Mapel berhasil dihapus.');
     }
 }

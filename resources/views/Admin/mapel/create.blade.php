@@ -4,7 +4,7 @@
 <div class="container">
     <h1 class="mb-4">Tambah Mata Pelajaran</h1>
 
-    <form action="{{ route('mapel.store') }}" method="POST">
+    <form action="{{ route('admin.mapel.store') }}" method="POST">
         @csrf
 
         <div class="mb-3">
@@ -18,7 +18,7 @@
             @enderror
         </div>
 
-        <a href="{{ route('mapel.index') }}" class="btn btn-secondary">Kembali</a>
+        <a href="{{ route('admin.mapel.index') }}" class="btn btn-secondary">Kembali</a>
         <button type="submit" class="btn btn-primary">Simpan</button>
     </form>
 </div>

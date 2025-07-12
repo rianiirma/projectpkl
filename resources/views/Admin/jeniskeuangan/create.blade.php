@@ -17,7 +17,7 @@
         </div>
     @endif
 
-    <form action="{{ route('jeniskeuangan.store') }}" method="POST">
+    <form action="{{ route('admin.jeniskeuangan.store') }}" method="POST">
         @csrf
 
         <div class="mb-3">
@@ -30,7 +30,7 @@
             <textarea name="deskripsi" class="form-control" rows="3" required></textarea>
         </div>
 
-        <a href="{{ route('jeniskeuangan.index') }}" class="btn btn-secondary">Kembali</a>
+        <a href="{{ route('admin.jeniskeuangan.index') }}" class="btn btn-secondary">Kembali</a>
         <button type="submit" class="btn btn-primary">Simpan</button>
     </form>
 </div>

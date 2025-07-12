@@ -4,7 +4,7 @@
 <div class="container">
     <h1 class="mb-4">Edit Mata Pelajaran</h1>
 
-    <form action="{{ route('mapel.update', $mapel->id) }}" method="POST">
+    <form action="{{ route('admin.mapel.update', $mapel->id) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -19,7 +19,7 @@
             @enderror
         </div>
 
-        <a href="{{ route('mapel.index') }}" class="btn btn-secondary">Batal</a>
+        <a href="{{ route('admin.mapel.index') }}" class="btn btn-secondary">Batal</a>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
 </div>

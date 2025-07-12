@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jadwal;
-use App\Models\Kelas;
-use App\Models\Guru;
-use App\Models\Mapel;
 use Illuminate\Http\Request;
 
 class JadwalController extends Controller
@@ -13,61 +10,73 @@ class JadwalController extends Controller
     public function index()
     {
         $jadwal = Jadwal::all();
-        return view('Admin/jadwal.index', compact('jadwal'));
+        return view('admin.jadwal.index', compact('jadwal'));
     }
 
     public function create()
     {
-        return view('Admin/jadwal.create');
+        return view('admin.jadwal.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'id_kelas' => 'required',
-            'id_guru' => 'required',
-            'id_mapel' => 'required',
-            'hari' => 'required',
+            'id_kelas' => 'required|exists:kelas,id',
+            'id_guru' => 'required|exists:gurus,id',
+            'id_mapel' => 'required|exists:mapels,id',
+            'hari' => 'required|string',
             'waktu_mulai' => 'required',
             'waktu_selesai' => 'required',
-            'ruang' => 'required',
         ]);
 
-        Jadwal::create($request->all());
+        Jadwal::create([
+            'id_kelas' => $request->id_kelas,
+            'id_guru' => $request->id_guru,
+            'id_mapel' => $request->id_mapel,
+            'hari' => $request->hari,
+            'waktu_mulai' => $request->waktu_mulai,
+            'waktu_selesai' => $request->waktu_selesai,
+        ]);
 
-        return redirect()->route('Admin/jadwal.index')->with('success', 'Jadwal berhasil ditambahkan.');
+        return redirect()->route('admin.jadwal.index')->with('success', 'Jadwal berhasil ditambahkan.');
     }
 
     public function show(Jadwal $jadwal)
     {
-        return view('Admin/jadwal.show', compact('jadwal'));
+        return view('admin.jadwal.show', compact('jadwal'));
     }
 
     public function edit(Jadwal $jadwal)
     {
-        return view('Admin/jadwal.edit', compact('jadwal'));
+        return view('admin.jadwal.edit', compact('jadwal'));
     }
 
     public function update(Request $request, Jadwal $jadwal)
     {
         $request->validate([
-            'id_kelas' => 'required',
-            'id_guru' => 'required',
-            'id_mapel' => 'required',
-            'hari' => 'required',
+            'id_kelas' => 'required|exists:kelas,id',
+            'id_guru' => 'required|exists:gurus,id',
+            'id_mapel' => 'required|exists:mapels,id',
+            'hari' => 'required|string',
             'waktu_mulai' => 'required',
             'waktu_selesai' => 'required',
-            'ruang' => 'required',
         ]);
 
-        $jadwal->update($request->all());
+        $jadwal->update([
+            'id_kelas' => $request->id_kelas,
+            'id_guru' => $request->id_guru,
+            'id_mapel' => $request->id_mapel,
+            'hari' => $request->hari,
+            'waktu_mulai' => $request->waktu_mulai,
+            'waktu_selesai' => $request->waktu_selesai,
+        ]);
 
-        return redirect()->route('Admin/jadwal.index')->with('success', 'Jadwal berhasil diperbarui.');
+        return redirect()->route('admin.jadwal.index')->with('success', 'Jadwal berhasil diperbarui.');
     }
 
     public function destroy(Jadwal $jadwal)
     {
         $jadwal->delete();
-        return redirect()->route('Admin/jadwal.index')->with('success', 'Jadwal berhasil dihapus.');
+        return redirect()->route('admin.jadwal.index')->with('success', 'Jadwal berhasil dihapus.');
     }
 }
