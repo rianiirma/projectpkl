@@ -1,51 +1,30 @@
 @extends('layouts.guru')
 
 @section('content')
-<div class="container">
-    <h2>Daftar Jadwal</h2>
-    <a href="{{ route('guru.jadwal.create') }}" class="btn btn-primary mb-3">+ Tambah Jadwal</a>
+<div class="container mt-4">
+    <h4>Jadwal Mengajar Anda</h4>
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-
-    @if($jadwal->isEmpty())
-        <p>Tidak ada data jadwal.</p>
+        @if($jadwals->isEmpty())
+        <p>Tidak ada jadwal.</p>
     @else
         <table class="table table-bordered">
             <thead>
-                <tr>    
-                    <th>ID</th>
-                    <th>ID Kelas</th>
-                    <th>ID Guru</th>
-                    <th>ID Mapel</th>
+                <tr>
+                    <th>No</th>
                     <th>Hari</th>
-                    <th>Waktu Mulai</th>
-                    <th>Waktu Selesai</th>
-                    <th>Ruang</th>
-                    <th>Aksi</th>
+                    <th>Jam</th>
+                    <th>Kelas</th>
+                    <th>Mata Pelajaran</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($jadwal as $j)
+                @foreach ($jadwals as $j)
                     <tr>
-                        <td>{{ $j->id }}</td>
-                        <td>{{ $j->id_kelas }}</td>
-                        <td>{{ $j->id_guru }}</td>
-                        <td>{{ $j->id_mapel }}</td>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $j->hari }}</td>
-                        <td>{{ $j->waktu_mulai }}</td>
-                        <td>{{ $j->waktu_selesai }}</td>
-                        <td>{{ $j->ruang }}</td>
-                        <td>
-                            <a href="{{ route('guru.jadwal.edit', $j->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <a href="{{ route('guru.jadwal.show', $j->id) }}" class="btn btn-info btn-sm">Lihat</a>
-                            <form action="{{ route('guru.jadwal.destroy', $j->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
-                            </form>
-                        </td>
+                        <td>{{ $j->waktu_mulai }} - {{ $j->waktu_selesai }}</td>
+                        <td>{{ $j->kelas->nama ?? '-' }}</td>
+                        <td>{{ $j->mapel->nama ?? '-' }}</td>
                     </tr>
                 @endforeach
             </tbody>

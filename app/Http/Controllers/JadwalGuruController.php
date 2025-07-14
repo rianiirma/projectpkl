@@ -2,67 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guru;
 use App\Models\Jadwal;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
 
-class JadwalController extends Controller
+class JadwalGuruController extends Controller
 {
     public function index()
     {
-        $jadwal = Jadwal::all();
-        return view('guru.jadwal.index', compact('jadwal'));
-    }
+        $user = Auth::user();
 
-    public function create()
-    {
-        return view('guru.jadwal.create');
-    }
+        $guru = Guru::where('id_user', $user->id)->first();
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'id_kelas' => 'required',
-            'id_guru' => 'required',
-            'id_mapel' => 'required',
-            'hari' => 'required',
-            'waktu_mulai' => 'required',
-            'waktu_selesai' => 'required',
-        ]);
+        $jadwals = collect();
 
-        Jadwal::create($request->all());
+        if ($guru) {
+            $jadwals = Jadwal::with(['kelas', 'mapel'])
+                ->where('id_guru', $guru->id)
+                ->get();
+        }
 
-        return redirect()->route('guru.jadwal.index')->with('success', 'Jadwal berhasil ditambahkan.');
-    }
-
-    public function show(Jadwal $jadwal)
-    {
-        return view('guru.jadwal.show', compact('jadwal'));
-    }
-
-    public function edit(Jadwal $jadwal)
-    {
-        return view('guru.jadwal.edit', compact('jadwal'));
-    }
-
-    public function update(Request $request, Jadwal $jadwal)
-    {
-        $request->validate([
-            'id_kelas' => 'required',
-            'id_guru' => 'required',
-            'id_mapel' => 'required',
-            'hari' => 'required',
-            'waktu_mulai' => 'required',
-            'waktu_selesai' => 'required',
-        ]);
-
-        $jadwal->update($request->all());
-
-        return redirect()->route('guru.jadwal.index')->with('success', 'Jadwal berhasil diperbarui.');
-    }
-
-    public function destroy(Jadwal $jadwal)
-    {
-        $jadwal->delete();
-        return redirect()->route('guru.jadwal.index')->with('success', 'Jadwal berhasil dihapus.');
+        return view('guru.jadwal.index', compact('jadwals'));
     }
 }

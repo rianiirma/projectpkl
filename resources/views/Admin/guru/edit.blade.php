@@ -6,10 +6,18 @@
     <form action="{{ route('admin.guru.update', $guru->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-        <div class="mb-3">
-            <label>Nama User</label>
-            <input type="number" name="id_user" class="form-control" value="{{ $guru->id_user }}" required>
+        <div class="form-group">
+        <label for="id_user">Pilih Akun User Guru</label>
+            <select name="id_user" class="form-control" required>
+                <option value="">-- Pilih User --</option>
+                @foreach($users as $user)
+                    <option value="{{ $user->id }}" {{ $guru->id_user == $user->id ? 'selected' : '' }}>
+                        {{ $user->nama }} ({{ $user->email }})
+                    </option>
+                @endforeach
+            </select>
         </div>
+
         <div class="mb-3">
             <label>Nama</label>
             <input type="text" name="nama" class="form-control" value="{{ $guru->nama }}" required>

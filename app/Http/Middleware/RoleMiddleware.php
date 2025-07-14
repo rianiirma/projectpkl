@@ -1,33 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Middleware;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class LoginController extends Controller
+class RoleMiddleware
 {
-    use AuthenticatesUsers;
-
-    protected function authenticated(Request $request, $user)
+    public function handle(Request $request, Closure $next, ...$roles)
     {
-        $role = $user->role;
+        $user = Auth::user();
 
-        if ($role === 'admin') {
-            return redirect()->route('admin.dashboard');
-        } elseif ($role === 'guru') {
-            return redirect()->route('guru.dashboard');
-        } elseif ($role === 'siswa') {
-            return redirect()->route('siswa.dashboard');
+        if (!$user || !in_array($user->role, ['admin','guru'])) {
+            abort(403, 'Akses ditolak: Anda tidak memiliki izin.');
         }
 
-        return redirect('/');
-    }
-
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-        $this->middleware('auth')->only('logout');
+        return $next($request);
     }
 }

@@ -16,7 +16,8 @@ class GuruController extends Controller
 
     public function create()
     {
-        return view('admin.guru.create');
+        $users = User::where('role', 'guru')->get(); // hanya user dengan role guru
+        return view('admin.guru.create', compact('users'));
     }
 
     public function store(Request $request)
@@ -46,7 +47,8 @@ class GuruController extends Controller
 
     public function edit(Guru $guru)
     {
-        return view('admin.guru.edit', compact('guru'));
+        $users = User::where('role', 'guru')->get();
+        return view('admin.guru.edit', compact('guru', 'users'));
     }
 
     public function update(Request $request, Guru $guru)

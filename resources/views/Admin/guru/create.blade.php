@@ -5,9 +5,14 @@
     <h2>Tambah Guru</h2>
     <form action="{{ route('admin.guru.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <div class="mb-3">
-            <label>Nama User</label>
-            <input type="number" name="id_user" class="form-control" required>
+        <div class="form-group">
+        <label for="id_user">Pilih Akun User Guru</label>
+            <select name="id_user" class="form-control" required>
+                <option value="">-- Pilih User --</option>
+                @foreach($users as $user)
+                    <option value="{{ $user->id }}">{{ $user->nama }} ({{ $user->email }})</option>
+                @endforeach
+            </select>
         </div>
         <div class="mb-3">
             <label>Nama</label>

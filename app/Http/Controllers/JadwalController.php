@@ -9,7 +9,7 @@ class JadwalController extends Controller
 {
     public function index()
     {
-        $jadwal = Jadwal::all();
+        $jadwal = Jadwal::with(['kelas', 'guru', 'mapel'])->get();
         return view('admin.jadwal.index', compact('jadwal'));
     }
 

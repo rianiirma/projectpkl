@@ -28,10 +28,10 @@
             <tbody>
                 @foreach ($jadwal as $j)
                     <tr>
-                        <td>{{ $j->id }}</td>
-                        <td>{{ $j->id_kelas }}</td>
-                        <td>{{ $j->id_guru }}</td>
-                        <td>{{ $j->id_mapel }}</td>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $j->kelas->nama ?? '-' }}</td>
+                        <td>{{ $j->guru->nama ?? '-' }}</td>
+                        <td>{{ $j->mapel->nama ?? '-' }}</td>
                         <td>{{ $j->hari }}</td>
                         <td>{{ $j->waktu_mulai }}</td>
                         <td>{{ $j->waktu_selesai }}</td>
@@ -46,6 +46,7 @@
                     </tr>
                 @endforeach
             </tbody>
+
         </table>
     @endif
 </div>

@@ -2,63 +2,69 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JenisKeuangan;
+use App\Models\Keuangan;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 
 class KeuanganController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $siswas = Siswa::all();
+        $jeniskeuangans = JenisKeuangan::all();
+        return view('admin.keuangan.create', compact('siswas', 'jeniskeuangans'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function index()
+    {
+        $keuangans = \App\Models\Keuangan::with(['siswa', 'jeniskeuangan'])->get();
+        return view('admin.keuangan.index', compact('keuangans'));
+    }
+
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'id_siswa' => 'required',
+            'id_jeniskeuangan' => 'required',
+            'tanggal_bayar' => 'required|date',
+            'jumlah' => 'required|numeric',
+            'metode_pembayaran' => 'required|string',
+            'status' => 'required|in:belum lunas,lunas',
+        ]);
+
+        Keuangan::create($request->all());
+
+        return redirect()->route('admin.keuangan.index')->with('success', 'Data keuangan berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Keuangan $keuangan)
     {
-        //
+        $siswas = Siswa::all();
+        $jeniskeuangans = JenisKeuangan::all();
+        return view('admin.keuangan.edit', compact('keuangan', 'siswas', 'jeniskeuangans'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, Keuangan $keuangan)
     {
-        //
+        $request->validate([
+            'id_siswa' => 'required',
+            'id_jeniskeuangan' => 'required',
+            'tanggal_bayar' => 'required|date',
+            'jumlah' => 'required|numeric',
+            'metode_pembayaran' => 'required|string',
+            'status' => 'required|in:belum lunas,lunas',
+        ]);
+
+        $keuangan->update($request->all());
+
+        return redirect()->route('admin.keuangan.index')->with('success', 'Data keuangan berhasil diupdate.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Keuangan $keuangan)
     {
-        //
-    }
+        $keuangan->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('admin.keuangan.index')->with('success', 'Data keuangan berhasil dihapus.');
     }
 }

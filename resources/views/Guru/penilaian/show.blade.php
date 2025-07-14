@@ -1,18 +1,24 @@
 @extends('layouts.guru')
 
 @section('content')
-<div class="container mt-4">
-    <h2>Detail Penilaian</h2>
-    <div class="card">
-        <div class="card-body">
-            <p><strong>ID:</strong> {{ $penilaian->id }}</p>
-            <p><strong>ID Siswa:</strong> {{ $penilaian->id_siswa }}</p>
-            <p><strong>ID Semester:</strong> {{ $penilaian->id_semester }}</p>
-            <p><strong>Jenis Penilaian:</strong> {{ $penilaian->jenis_penilaian }}</p>
-            <p><strong>Nilai:</strong> {{ $penilaian->nilai }}</p>
-            <p><strong>Keterangan:</strong> {{ $penilaian->keterangan }}</p>
-            <a href="{{ route('guru.penilaian.index') }}" class="btn btn-secondary">Kembali</a>
-        </div>
-    </div>
-</div>
+<h4>Nilai Siswa Kelas {{ $kelas->nama }} - {{ $jenis_penilaian }}</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nama Siswa</th>
+            <th>Nilai</th>
+            <th>Keterangan</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($penilaians as $p)
+        <tr>
+            <td>{{ $p->siswa->nama }}</td>
+            <td>{{ $p->nilai }}</td>
+            <td>{{ $p->keterangan }}</td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
 @endsection
