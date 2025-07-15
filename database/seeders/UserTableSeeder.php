@@ -16,19 +16,19 @@ class UserTableSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'is_admin' => true,
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('password'),
             'role' => 'admin',
         ]);
         User::create([
             'name' => 'irma',
             'email' => 'irma@gmail.com',
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('password'),
             'role' => 'siswa',
         ]);
         User::create([
             'name' => 'feby',
             'email' => 'feby@admin.com',
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('password'),
             'role' => 'guru',
         ]);
 

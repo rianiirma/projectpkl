@@ -1,11 +1,11 @@
 <?php
-
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller; 
 
 class SiswaController extends Controller
 {
@@ -16,7 +16,6 @@ class SiswaController extends Controller
     {
         $siswas = Siswa::with(['kelas', 'user'])->get();
         return view('admin.siswa.index', compact('siswas'));
-
     }
 
     /**

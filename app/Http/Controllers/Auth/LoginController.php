@@ -3,31 +3,51 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    use AuthenticatesUsers;
-
-    protected function authenticated(Request $request, $user)
+    public function showLoginForm()
     {
-        $role = $user->role;
-
-        if ($role === 'admin') {
-            return redirect()->route('admin.dashboard');
-        } elseif ($role === 'guru') {
-            return redirect()->route('guru.dashboard');
-        } elseif ($role === 'siswa') {
-            return redirect()->route('siswa.dashboard');
-        }
-
-        return redirect('/');
+        return view('auth.login');
     }
 
-    public function __construct()
+    public function login(Request $request)
     {
-        $this->middleware('guest')->except('logout');
-        $this->middleware('auth')->only('logout');
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            // Redirect berdasarkan role
+            $user = Auth::user();
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            } elseif ($user->role === 'guru') {
+                return redirect()->route('guru.dashboard');
+            } elseif ($user->role === 'siswa') {
+                return redirect()->route('siswa.dashboard');
+            }
+
+            return redirect('/'); // Default jika role tidak dikenali
+        }
+
+        return back()->withErrors([
+            'email' => 'Email atau password salah.',
+        ])->onlyInput('email');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 }

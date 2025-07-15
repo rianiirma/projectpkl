@@ -24,9 +24,9 @@
         <tbody>
             @forelse($siswas as $siswa)
             <tr>
-                <td>{{ $siswa->id }}</td>
-                <td>{{ $siswa->nama }}</td>
-                <td>{{ $siswa->nomor_kelas }}</td>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $siswa->user->name ?? '-' }}</td>
+                <td>{{ $siswa->kelas->nomor_kelas ?? '-' }}</td>
                 <td>{{ $siswa->nisn }}</td>
                 <td>{{ $siswa->nama }}</td>
                 <td>{{ $siswa->alamat }}</td>
@@ -34,18 +34,20 @@
                 <td>{{ $siswa->no_telepon }}</td>
                 <td>
                     @if ($siswa->foto)
-                        <img src="{{ asset('storage/foto/' . $siswa->foto) }}" alt="Foto" width="50">
+                    <img src="{{ asset('storage/' . $siswa->foto) }}" alt="Foto" width="50">
                     @else
-                        -
+                    <span>-</span>
                     @endif
                 </td>
                 <td>
-                    <a href="{{ route('admin.siswa.edit', $siswa->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                    <form action="{{ route('admin.siswa.destroy', $siswa->id) }}" method="POST" style="display:inline-block;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin hapus data ini?')">Hapus</button>
-                    </form>
+                    <div class="d-flex gap-2">
+                        <a href="{{ route('admin.siswa.edit', $siswa->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="{{ route('admin.siswa.destroy', $siswa->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin hapus data ini?')">Hapus</button>
+                        </form>
+                    </div>
                 </td>
             </tr>
             @empty

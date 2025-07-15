@@ -6,11 +6,11 @@
     <form action="{{ route('admin.guru.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
-        <label for="id_user">Pilih Akun User Guru</label>
+            <label>Nama User</label>
             <select name="id_user" class="form-control" required>
                 <option value="">-- Pilih User --</option>
-                @foreach($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->nama }} ({{ $user->email }})</option>
+                @foreach ($users as $user)
+                <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
                 @endforeach
             </select>
         </div>

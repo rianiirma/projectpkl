@@ -5,14 +5,14 @@
     <h1 class="mb-4">Tambah Jurusan</h1>
 
     @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Ups!</strong> Ada kesalahan pada inputan:<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+    <div class="alert alert-danger">
+        <strong>Ups!</strong> Ada kesalahan pada inputan:<br><br>
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
 
     <form action="{{ route('admin.jurusan.store') }}" method="POST">

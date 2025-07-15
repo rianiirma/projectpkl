@@ -12,7 +12,7 @@
             <select name="id_siswa" class="form-select" required>
                 <option value="">-- Pilih Siswa --</option>
                 @foreach ($siswas as $siswa)
-                    <option value="{{ $siswa->id }}">{{ $siswa->nama }}</option>
+                <option value="{{ $siswa->id }}">{{ $siswa->nama }}</option>
                 @endforeach
             </select>
         </div>
@@ -22,7 +22,7 @@
             <select name="id_jeniskeuangan" class="form-select" required>
                 <option value="">-- Pilih Jenis --</option>
                 @foreach ($jeniskeuangans as $jenis)
-                    <option value="{{ $jenis->id }}">{{ $jenis->nama }}</option>
+                <option value="{{ $jenis->id }}">{{ $jenis->nama }}</option>
                 @endforeach
             </select>
         </div>

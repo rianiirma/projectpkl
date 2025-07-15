@@ -12,9 +12,9 @@
             <input type="text" name="nama" id="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}" required>
 
             @error('nama')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
             @enderror
         </div>
 

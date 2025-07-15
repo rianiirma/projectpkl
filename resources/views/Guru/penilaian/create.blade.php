@@ -7,7 +7,7 @@
     @csrf
     <input type="hidden" name="id_kelas" value="{{ $id_kelas }}">
     <input type="hidden" name="id_semester" value="{{ $semester->id }}">
-    
+
     <div class="form-group">
         <label for="jenis_penilaian">Jenis Penilaian</label>
         <select name="jenis_penilaian" class="form-control" required>
@@ -28,19 +28,19 @@
         <tbody>
             @foreach($siswas as $siswa)
             @php
-                $nilaiLama = \App\Models\Penilaian::where('id_siswa', $siswa->id)
-                    ->where('id_semester', $semester->id)
-                    ->where('jenis_penilaian', request()->old('jenis_penilaian', 'UTS')) // default ke UTS
-                    ->first();
+            $nilaiLama = \App\Models\Penilaian::where('id_siswa', $siswa->id)
+            ->where('id_semester', $semester->id)
+            ->where('jenis_penilaian', request()->old('jenis_penilaian', 'UTS')) // default ke UTS
+            ->first();
             @endphp
             <tr>
                 <td>
                     @if($nilaiLama)
-                        <input type="number" class="form-control" value="{{ $nilaiLama->nilai }}" disabled>
-                        <input type="hidden" name="nilai[{{ $siswa->id }}]" value="{{ $nilaiLama->nilai }}">
-                        <small class="text-danger">Sudah dinilai</small>
+                    <input type="number" class="form-control" value="{{ $nilaiLama->nilai }}" disabled>
+                    <input type="hidden" name="nilai[{{ $siswa->id }}]" value="{{ $nilaiLama->nilai }}">
+                    <small class="text-danger">Sudah dinilai</small>
                     @else
-                        <input type="number" name="nilai[{{ $siswa->id }}]" class="form-control" required>
+                    <input type="number" name="nilai[{{ $siswa->id }}]" class="form-control" required>
                     @endif
                 </td>
 

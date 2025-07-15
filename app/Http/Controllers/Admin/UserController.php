@@ -1,10 +1,10 @@
 <?php
-
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -22,9 +22,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama' => 'required',
+            'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
-            'role' => 'required',
+            'role' => 'required|in:admin,guru,siswa',
             'password' => 'required|min:6',
         ]);
 
@@ -48,9 +48,9 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
-            'nama' => 'required',
+            'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'role' => 'required',
+            'role' => 'required|in:admin,guru,siswa',
             'password' => 'nullable|min:6',
         ]);
 

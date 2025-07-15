@@ -12,9 +12,9 @@
             <label class="form-label">Nama Siswa</label>
             <select name="id_siswa" class="form-select" required>
                 @foreach ($siswas as $siswa)
-                    <option value="{{ $siswa->id }}" {{ $siswa->id == $keuangan->id_siswa ? 'selected' : '' }}>
-                        {{ $siswa->nama }}
-                    </option>
+                <option value="{{ $siswa->id }}" {{ $siswa->id == $keuangan->id_siswa ? 'selected' : '' }}>
+                    {{ $siswa->nama }}
+                </option>
                 @endforeach
             </select>
         </div>
@@ -23,9 +23,9 @@
             <label class="form-label">Jenis Keuangan</label>
             <select name="id_jeniskeuangan" class="form-select" required>
                 @foreach ($jeniskeuangans as $jenis)
-                    <option value="{{ $jenis->id }}" {{ $jenis->id == $keuangan->id_jeniskeuangan ? 'selected' : '' }}>
-                        {{ $jenis->nama }}
-                    </option>
+                <option value="{{ $jenis->id }}" {{ $jenis->id == $keuangan->id_jeniskeuangan ? 'selected' : '' }}>
+                    {{ $jenis->nama }}
+                </option>
                 @endforeach
             </select>
         </div>

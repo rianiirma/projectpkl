@@ -7,14 +7,14 @@
     <h1 class="mb-4">Edit Jenis Keuangan</h1>
 
     @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Ups!</strong> Ada kesalahan pada inputan:<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+    <div class="alert alert-danger">
+        <strong>Ups!</strong> Ada kesalahan pada inputan:<br><br>
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
 
     <form action="{{ route('admin.jeniskeuangan.update', $jeniskeuangan->id) }}" method="POST">

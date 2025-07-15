@@ -10,7 +10,7 @@
 
         <div class="form-group">
             <label>Nama</label>
-            <input type="text" name="nama" class="form-control" value="{{ $user->nama }}" required>
+            <input type="text" name="name" class="form-control" value="{{ $user->nama }}" required>
         </div>
 
         <div class="form-group">
@@ -32,8 +32,8 @@
             <input type="password" name="password" class="form-control">
         </div>
 
-        <button type="submit" class="btn btn-primary mt-3">Update</button>
         <a href="{{ route('admin.user.index') }}" class="btn btn-secondary mt-3">Batal</a>
+        <button type="submit" class="btn btn-primary mt-3">Update</button>
     </form>
 </div>
 @endsection

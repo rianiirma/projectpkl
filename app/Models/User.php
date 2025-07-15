@@ -14,12 +14,11 @@ class User extends Authenticatable
 
     protected $fillable = [
     'id',
-    'nama',
+    'name',
     'email', 
     'role', 
-    'email_verifed_at', 
     'password', 
-    'remember_token'];
+    ];
     public $timestamp = true;
 
     public function siswa()

@@ -1,21 +1,28 @@
 <?php
+namespace App\Http\Controllers\Admin;
 
-namespace App\Http\Controllers;
-
+use App\Models\Guru;
 use App\Models\Jadwal;
+use App\Models\Kelas;
+use App\Models\Mapel;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class JadwalController extends Controller
 {
     public function index()
     {
-        $jadwal = Jadwal::with(['kelas', 'guru', 'mapel'])->get();
-        return view('admin.jadwal.index', compact('jadwal'));
+        $jadwals = Jadwal::with(['kelas', 'guru', 'mapel'])->get();
+        return view('admin.jadwal.index', compact('jadwals'));
     }
 
     public function create()
     {
-        return view('admin.jadwal.create');
+        $kelas = Kelas::all();
+        $guru = Guru::all();
+        $mapel = Mapel::all();
+
+        return view('admin.jadwal.create', compact('kelas', 'guru', 'mapel'));
     }
 
     public function store(Request $request)
@@ -29,14 +36,7 @@ class JadwalController extends Controller
             'waktu_selesai' => 'required',
         ]);
 
-        Jadwal::create([
-            'id_kelas' => $request->id_kelas,
-            'id_guru' => $request->id_guru,
-            'id_mapel' => $request->id_mapel,
-            'hari' => $request->hari,
-            'waktu_mulai' => $request->waktu_mulai,
-            'waktu_selesai' => $request->waktu_selesai,
-        ]);
+        Jadwal::create($request->all());
 
         return redirect()->route('admin.jadwal.index')->with('success', 'Jadwal berhasil ditambahkan.');
     }
@@ -46,9 +46,14 @@ class JadwalController extends Controller
         return view('admin.jadwal.show', compact('jadwal'));
     }
 
-    public function edit(Jadwal $jadwal)
+    public function edit($id)
     {
-        return view('admin.jadwal.edit', compact('jadwal'));
+        $jadwal = Jadwal::findOrFail($id);
+        $kelas = Kelas::all();
+        $guru = Guru::all();
+        $mapel = Mapel::all();
+
+        return view('admin.jadwal.edit', compact('jadwal', 'kelas', 'guru', 'mapel'));
     }
 
     public function update(Request $request, Jadwal $jadwal)
@@ -62,14 +67,7 @@ class JadwalController extends Controller
             'waktu_selesai' => 'required',
         ]);
 
-        $jadwal->update([
-            'id_kelas' => $request->id_kelas,
-            'id_guru' => $request->id_guru,
-            'id_mapel' => $request->id_mapel,
-            'hari' => $request->hari,
-            'waktu_mulai' => $request->waktu_mulai,
-            'waktu_selesai' => $request->waktu_selesai,
-        ]);
+        $jadwal->update($request->all());
 
         return redirect()->route('admin.jadwal.index')->with('success', 'Jadwal berhasil diperbarui.');
     }

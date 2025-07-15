@@ -1,9 +1,11 @@
 <?php
+namespace App\Http\Controllers\Admin;
 
-namespace App\Http\Controllers;
-
+use App\Models\Guru;
+use App\Models\Jurusan;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class KelasController extends Controller
 {
@@ -15,21 +17,27 @@ class KelasController extends Controller
 
     public function create()
     {
-        return view('admin.kelas.create');
+        $jurusans = Jurusan::all();
+        $gurus = Guru::all();
+        return view('admin.kelas.create', compact('jurusans', 'gurus'));
     }
-
     public function store(Request $request)
     {
         $request->validate([
-            'id_jurusan' => 'required',
+            'id_jurusan' => 'required|exists:jurusans,id',
             'nomor_kelas' => 'required',
-            'kapasitas' => 'required|integer',
-            'id_guru' => 'required',
+            'kapasitas' => 'required|numeric',
+            'id_guru' => 'required|exists:gurus,id',
         ]);
 
-        Kelas::create($request->all());
+        Kelas::create([
+            'id_jurusan' => $request->id_jurusan,
+            'nomor_kelas' => $request->nomor_kelas,
+            'kapasitas' => $request->kapasitas,
+            'id_guru' => $request->id_guru,
+        ]);
 
-        return redirect()->route('admin.kelas.index')->with('success', 'Kelas berhasil ditambahkan.');
+        return redirect()->route('admin.kelas.index')->with('success', 'Data kelas berhasil ditambahkan.');
     }
 
     public function show(Kelas $kelas)
@@ -39,7 +47,9 @@ class KelasController extends Controller
 
     public function edit(Kelas $kelas)
     {
-        return view('admin.kelas.edit', compact('kelas'));
+        $jurusans = Jurusan::all();
+        $gurus = Guru::all();
+        return view('admin.kelas.edit', compact('kelas', 'jurusans', 'gurus'));
     }
 
     public function update(Request $request, Kelas $kelas)

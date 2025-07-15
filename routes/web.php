@@ -1,80 +1,108 @@
 <?php
 
-use App\Http\Controllers\GuruController;
-use App\Http\Controllers\SiswaController;
-use App\Http\Controllers\JadwalController;
-use App\Http\Controllers\JadwalGuruController;
-use App\Http\Controllers\JeniskeuanganController;
-use App\Http\Controllers\KelasController;
-use App\Http\Controllers\SemesterController;
-use App\Http\Controllers\JurusanController;
-use App\Http\Controllers\MapelController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\KeuanganController;
-use App\Http\Controllers\PenilaianController;
-use App\Http\Controllers\AbsensiController;
-use App\Http\Controllers\AbsensiSiswaController;
-use App\Http\Controllers\JadwalSiswaController;
-use App\Http\Controllers\PenilaianSiswaController;
-use App\Http\Controllers\KeuanganSiswaController;
-use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\GuruDashboardController;
-use App\Http\Controllers\SiswaDashboardController;
+use App\Http\Controllers\Admin\AbsensiController as AdminAbsensiController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+
+// Admin Controllers
+use App\Http\Controllers\Admin\GuruController;
+use App\Http\Controllers\Admin\JadwalController;
+use App\Http\Controllers\Admin\JeniskeuanganController;
+use App\Http\Controllers\Admin\JurusanController;
+use App\Http\Controllers\Admin\KelasController;
+use App\Http\Controllers\Admin\KeuanganController;
+use App\Http\Controllers\Admin\MapelController;
+use App\Http\Controllers\Admin\PenilaianController as AdminPenilaianController;
+use App\Http\Controllers\Admin\SemesterController;
+use App\Http\Controllers\Admin\SiswaController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Guru\AbsensiController as GuruAbsensiController;
+use App\Http\Controllers\Guru\DashboardController as GuruDashboardController;
+
+// Guru Controllers
+
+use App\Http\Controllers\Guru\JadwalController as JadwalGuruController;
+use App\Http\Controllers\Guru\PenilaianController as GuruPenilaianController;
+use App\Http\Controllers\Siswa\AbsensiController as AbsensiSiswaController;
+use App\Http\Controllers\Siswa\DashboardController as SiswaDashboardController;
+
+// Siswa Controllers
+use App\Http\Controllers\Siswa\JadwalController as JadwalSiswaController;
+use App\Http\Controllers\Siswa\KeuanganController as KeuanganSiswaController;
+use App\Http\Controllers\Siswa\PenilaianController as PenilaianSiswaController;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\RoleMiddleware;
+use App\Http\Controllers\Auth\LogoutController;
+
+// =======================
+// ROUTES
+// =======================
 
 Route::get('/', function () {
-    return view('layouts.admin');
+    return view('welcome'); // Bisa diganti ke halaman landing page kamu
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
-Route::get('/guru/dashboard', [GuruDashboardController::class, 'index'])->name('guru.dashboard');
+// Global Dashboard Redirector
+Route::get('/dashboard', function () {
+    $user = Auth::user();
 
-Route::group([
-    'prefix' => 'admin',
-    'as' => 'admin.',
-    'middleware' => ['auth', RoleMiddleware::class],
-], function () {
-    route::resource('guru', GuruController::class);
-    route::resource('siswa', SiswaController::class);
-    route::resource('jadwal', JadwalController::class);
-    route::resource('jeniskeuangan', JeniskeuanganController::class);
-    route::resource('kelas', KelasController::class);
-    route::resource('semester', SemesterController::class);
-    route::resource('jurusan', JurusanController::class);
-    route::resource('mapel', MapelController::class);
-    route::resource('keuangan', KeuanganController::class);
-    route::resource('user', UserController::class);
-    route::resource('penilaian', PenilaianController::class);
-    route::resource('absensi', AbsensiController::class);
+    if ($user->role === 'admin') {
+        return redirect()->route('admin.dashboard');
+    } elseif ($user->role === 'guru') {
+        return redirect()->route('guru.dashboard');
+    } elseif ($user->role === 'siswa') {
+        return redirect()->route('siswa.dashboard');
+    }
+
+    abort(403, 'Role tidak dikenali.');
+})->middleware(['auth'])->name('dashboard');
+
+
+// =======================
+// ADMIN
+// =======================
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+
+    Route::resource('guru', GuruController::class);
+    Route::resource('siswa', SiswaController::class);
+    Route::resource('jadwal', JadwalController::class);
+    Route::resource('jeniskeuangan', JeniskeuanganController::class);
+    Route::resource('kelas', KelasController::class);
+    Route::resource('semester', SemesterController::class);
+    Route::resource('jurusan', JurusanController::class);
+    Route::resource('mapel', MapelController::class);
+    Route::resource('keuangan', KeuanganController::class);
+    Route::resource('user', UserController::class);
+    Route::resource('penilaian', AdminPenilaianController::class);
+    Route::resource('absensi', AdminAbsensiController::class);
 });
 
-Route::group([
-    'prefix' => 'guru',
-    'as' => 'guru.',
-    'middleware' => ['auth'], 
-], function () {
-    Route::get('/', [GuruDashboardController::class, 'index'])->name('dashboard');
+// =======================
+// GURU
+// =======================
+Route::middleware(['auth', 'role:guru'])->prefix('guru')->name('guru.')->group(function () {
+    Route::get('/dashboard', [GuruDashboardController::class, 'index'])->name('dashboard');
+
     Route::get('jadwal', [JadwalGuruController::class, 'index'])->name('jadwal.index');
-    Route::get('penilaian', [PenilaianController::class, 'index'])->name('penilaian.index');
-    Route::get('penilaian/create/{id_kelas}', [PenilaianController::class, 'create'])->name('penilaian.create');
-    Route::post('penilaian', [PenilaianController::class, 'store'])->name('penilaian.store');
-    Route::get('penilaian/show/{id_kelas}/{jenis}', [PenilaianController::class, 'show'])->name('penilaian.show');
-    Route::resource('absensi', AbsensiController::class)->except(['destroy']);
+
+    Route::get('penilaian', [GuruPenilaianController::class, 'index'])->name('penilaian.index');
+    Route::get('penilaian/create/{id_kelas}', [GuruPenilaianController::class, 'create'])->name('penilaian.create');
+    Route::post('penilaian', [GuruPenilaianController::class, 'store'])->name('penilaian.store');
+    Route::get('penilaian/show/{id_kelas}/{jenis}', [GuruPenilaianController::class, 'show'])->name('penilaian.show');
+
+    Route::resource('absensi', GuruAbsensiController::class)->except(['destroy']);
 });
 
-Route::group([
-    'prefix' => 'siswa',
-    'as' => 'siswa.',
-    'middleware' => ['auth'],
-], function () {
-    Route::get('/', [SiswaDashboardController::class, 'index'])->name('dashboard');
+// =======================
+// SISWA
+// =======================
+Route::middleware(['auth', 'role:siswa'])->prefix('siswa')->name('siswa.')->group(function () {
+    Route::get('/dashboard', [SiswaDashboardController::class, 'index'])->name('dashboard');
     Route::get('/penilaian', [PenilaianSiswaController::class, 'index'])->name('penilaian.index');
     Route::get('/absensi', [AbsensiSiswaController::class, 'index'])->name('absensi.index');
     Route::get('/jadwal', [JadwalSiswaController::class, 'index'])->name('jadwal.index');
     Route::get('/keuangan', [KeuanganSiswaController::class, 'index'])->name('keuangan.index');
 });
-

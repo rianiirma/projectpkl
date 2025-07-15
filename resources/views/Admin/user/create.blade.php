@@ -9,7 +9,7 @@
 
         <div class="form-group">
             <label>Nama</label>
-            <input type="text" name="nama" class="form-control" required>
+            <input type="text" name="name" class="form-control" required>
         </div>
 
         <div class="form-group">
@@ -21,7 +21,6 @@
             <label>Role</label>
             <select name="role" class="form-control" required>
                 <option value="">-- Pilih Role --</option>
-                <option value="admin">Admin</option>
                 <option value="guru">Guru</option>
                 <option value="siswa">Siswa</option>
             </select>

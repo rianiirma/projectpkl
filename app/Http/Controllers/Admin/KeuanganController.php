@@ -1,11 +1,11 @@
 <?php
-
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\JenisKeuangan;
 use App\Models\Keuangan;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class KeuanganController extends Controller
 {
@@ -38,15 +38,19 @@ class KeuanganController extends Controller
         return redirect()->route('admin.keuangan.index')->with('success', 'Data keuangan berhasil ditambahkan.');
     }
 
-    public function edit(Keuangan $keuangan)
+    public function edit($id)
     {
+        $keuangan = Keuangan::findOrFail($id);
         $siswas = Siswa::all();
-        $jeniskeuangans = JenisKeuangan::all();
-        return view('admin.keuangan.edit', compact('keuangan', 'siswas', 'jeniskeuangans'));
+        $jenisKeuangans = Jeniskeuangan::all();
+
+        return view('admin.keuangan.edit', compact('keuangan', 'siswas', 'jenisKeuangans'));
     }
 
-    public function update(Request $request, Keuangan $keuangan)
+    public function update(Request $request, $id)
     {
+        $keuangan = Keuangan::findOrFail($id);
+
         $request->validate([
             'id_siswa' => 'required',
             'id_jeniskeuangan' => 'required',

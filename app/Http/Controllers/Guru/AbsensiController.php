@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Guru;
 
 use App\Models\Absensi;
 use Illuminate\Http\Request;

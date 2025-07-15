@@ -1,30 +1,28 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Guru;
 
 use App\Models\Guru;
 use App\Models\Jadwal;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
 
-class GuruDashboardController extends Controller
+class JadwalGuruController extends Controller
 {
     public function index()
     {
-        // Ambil user yang sedang login
         $user = Auth::user();
 
-        // Cari guru berdasarkan id_user
         $guru = Guru::where('id_user', $user->id)->first();
 
-        $jadwals = collect(); // Collection kosong
+        $jadwals = collect();
 
-        // Jika guru ditemukan, ambil jadwal yang sesuai dengan id_guru
         if ($guru) {
             $jadwals = Jadwal::with(['kelas', 'mapel'])
                 ->where('id_guru', $guru->id)
                 ->get();
         }
 
-        return view('guru.index', compact('jadwals'));
+        return view('guru.jadwal.index', compact('jadwals'));
     }
 }

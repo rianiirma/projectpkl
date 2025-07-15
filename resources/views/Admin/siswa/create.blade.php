@@ -5,14 +5,14 @@
     <h1 class="mb-4">Tambah Siswa</h1>
 
     @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Ups!</strong> Ada kesalahan pada inputan:<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+    <div class="alert alert-danger">
+        <strong>Ups!</strong> Ada kesalahan pada inputan:<br><br>
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
 
     <form action="{{ route('admin.siswa.store') }}" method="POST" enctype="multipart/form-data">
@@ -23,7 +23,7 @@
             <select name="id_user" class="form-control" required>
                 <option value="">-- Pilih User --</option>
                 @foreach($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->nama }} ({{ $user->email }})</option>
+                <option value="{{ $user->id }}">{{ $user->nama }} ({{ $user->email }})</option>
                 @endforeach
             </select>
         </div>
@@ -33,7 +33,7 @@
             <select name="id_kelas" class="form-control" required>
                 <option value="">-- Pilih Kelas --</option>
                 @foreach($kelasList as $kelas)
-                    <option value="{{ $kelas->id }}">{{ $kelas->nomor_kelas }}</option>
+                <option value="{{ $kelas->id }}">{{ $kelas->nomor_kelas }}</option>
                 @endforeach
             </select>
         </div>
@@ -72,8 +72,8 @@
             <input type="file" name="foto" class="form-control" accept="image/*">
         </div>
 
-        <button type="submit" class="btn btn-primary">Simpan</button>
         <a href="{{ route('admin.siswa.index') }}" class="btn btn-secondary">Kembali</a>
+        <button type="submit" class="btn btn-primary">Simpan</button>
     </form>
 </div>
 @endsection

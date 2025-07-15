@@ -1,43 +1,50 @@
 <?php
-
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Guru;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
 
 class GuruController extends Controller
 {
     public function index()
     {
-        $guru = Guru::all();
+        $guru = Guru::with('user')->get();
         return view('admin.guru.index', compact('guru'));
     }
 
     public function create()
     {
-        $users = User::where('role', 'guru')->get(); // hanya user dengan role guru
+        $users = User::where('role', 'guru')->get();
         return view('admin.guru.create', compact('users'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'id_user' => 'required|integer',
-            'nama' => 'required|string|max:255',
-            'no_telepon' => 'required|string|max:15',
-            'foto' => 'nullable|image|max:2048',
-            'mapel_utama' => 'required|string|max:100',
+            'id_user' => 'required|exists:users,id',
+            'nama' => 'required|string',
+            'no_telepon' => 'required',
+            'mapel_utama' => 'required|string',
+            'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
-        $data = $request->all();
-
+        $fotoPath = null;
         if ($request->hasFile('foto')) {
-            $data['foto'] = $request->file('foto')->store('foto_guru', 'public');
+            $fotoPath = $request->file('foto')->store('foto_guru', 'public');
         }
 
-        Guru::create($data);
-        return redirect()->route('admin.guru.index')->with('success', 'Guru berhasil ditambahkan');
+        Guru::create([
+            'id_user' => $request->id_user,
+            'nama' => $request->nama,
+            'no_telepon' => $request->no_telepon,
+            'mapel_utama' => $request->mapel_utama,
+            'foto' => $fotoPath,
+        ]);
+
+        return redirect()->route('admin.guru.index')->with('success', 'Data guru berhasil ditambahkan.');
     }
 
     public function show(Guru $guru)
@@ -47,8 +54,7 @@ class GuruController extends Controller
 
     public function edit(Guru $guru)
     {
-        $users = User::where('role', 'guru')->get();
-        return view('admin.guru.edit', compact('guru', 'users'));
+        return view('admin.guru.edit', compact('guru'));
     }
 
     public function update(Request $request, Guru $guru)
@@ -64,7 +70,6 @@ class GuruController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('foto')) {
-            // hapus foto lama jika ada
             if ($guru->foto) {
                 Storage::disk('public')->delete($guru->foto);
             }

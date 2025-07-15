@@ -1,9 +1,9 @@
 <?php
-
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Semester;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class SemesterController extends Controller
 {
@@ -61,4 +61,3 @@ class SemesterController extends Controller
         return redirect()->route('admin.semester.index')->with('success', 'Semester berhasil dihapus.');
     }
 }
-

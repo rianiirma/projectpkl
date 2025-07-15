@@ -9,7 +9,7 @@
         <thead>
             <tr>
                 <th>No</th>
-                <th>Nama User</th>
+                <th>Email User</th>
                 <th>Nama</th>
                 <th>No Telepon</th>
                 <th>Foto</th>
@@ -21,14 +21,14 @@
             @foreach($guru as $item)
             <tr>
                 <td>{{ $item->id }}</td>
-                <td>{{ $item->id_user }}</td>
+                <td>{{ $item->user->email ?? '-' }}</td>
                 <td>{{ $item->nama }}</td>
-                <td>{{ $item->no_telepon }}</td>    
+                <td>{{ $item->no_telepon }}</td>
                 <td>
                     @if($item->foto)
-                        <img src="{{ asset('storage/' . $item->foto) }}" alt="Foto" width="60">
+                    <img src="{{ asset('storage/' . $item->foto) }}" alt="Foto" width="60">
                     @else
-                        Tidak ada foto
+                    Tidak ada foto
                     @endif
                 </td>
                 <td>{{ $item->mapel_utama }}</td>

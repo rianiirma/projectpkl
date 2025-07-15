@@ -1,7 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Guru;
 
+use App\Http\Controllers\Controller;
+use App\Models\Guru;
+use App\Models\Jadwal;
+use App\Models\Kelas;
 use App\Models\Penilaian;
 use App\Models\Semester;
 use App\Models\Siswa;
@@ -13,14 +17,14 @@ class PenilaianController extends Controller
     public function index()
     {
         $user = Auth::user();
-
-        $guru = \App\Models\Guru::where('id_user', $user->id)->first();
+        $guru = Guru::where('id_user', $user->id)->first();
 
         if (!$guru) {
             return redirect()->route('guru.dashboard')->with('error', 'Akun guru belum terhubung. Hubungi admin.');
         }
 
-        $jadwals = \App\Models\Jadwal::with('kelas')
+        // Ambil semua jadwal mengajar guru
+        $jadwals = Jadwal::with('kelas')
             ->where('id_guru', $guru->id)
             ->get();
 
@@ -30,7 +34,7 @@ class PenilaianController extends Controller
     public function create($id_kelas)
     {
         $siswas = Siswa::where('id_kelas', $id_kelas)->get();
-        $semester = Semester::latest()->first(); // Ambil semester aktif, jika ada
+        $semester = Semester::latest()->first(); // Ambil semester aktif
 
         return view('guru.penilaian.create', compact('siswas', 'semester', 'id_kelas'));
     }
@@ -56,7 +60,7 @@ class PenilaianController extends Controller
 
             if ($cek) {
                 $sudahAda++;
-                continue; // skip siswa yang sudah punya nilai
+                continue;
             }
 
             Penilaian::create([
@@ -76,13 +80,14 @@ class PenilaianController extends Controller
     public function show($id_kelas, $jenis)
     {
         $penilaians = Penilaian::with('siswa')
-            ->whereHas('siswa', fn($q) => $q->where('id_kelas', $id_kelas))
+            ->whereHas('siswa', function ($q) use ($id_kelas) {
+                $q->where('id_kelas', $id_kelas);
+            })
             ->where('jenis_penilaian', $jenis)
             ->get();
 
-        $kelas = \App\Models\Kelas::find($id_kelas);
+        $kelas = Kelas::find($id_kelas);
 
         return view('guru.penilaian.show', compact('penilaians', 'kelas', 'jenis'));
     }
-
 }

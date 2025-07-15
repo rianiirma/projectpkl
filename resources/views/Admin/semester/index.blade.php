@@ -2,42 +2,46 @@
 
 @section('content')
 <div class="container">
-    <h1 class="mb-4">Daftar semester</h1>
+    <h1 class="mb-4">Data Semester</h1>
+
+    <a href="{{ route('admin.semester.create') }}" class="btn btn-primary mb-3">Tambah Semester</a>
 
     @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
+    <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <a href="{{ route('admin.semester.create') }}" class="btn btn-primary mb-3">+ Tambah semester</a>
-
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <th>No</th>
                 <th>Tahun Ajaran</th>
+                <th>Status</th>
                 <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
-            @forelse ($semesters as $semester)
-                <tr>
-                    <td>{{ $semester->id }}</td>
-                    <td>{{ $semester->tahun_ajaran }}</td>
-                    <td>
-                        <a href="{{ route('admin.semester.edit', $semester->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                        <form action="{{ route('admin.semester.destroy', $semester->id) }}" method="POST" style="display: inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-sm btn-danger" onclick="return confirm('Yakin hapus semester ini?')">Hapus</button>
-                        </form>
-                    </td>
-                </tr>
+            @forelse($semesters as $semester)
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $semester->tahun_ajaran }}</td>
+                <td>
+                    <span class="badge {{ $semester->status === 'aktif' ? 'bg-success' : 'bg-secondary' }}">
+                        {{ ucfirst($semester->status) }}
+                    </span>
+                </td>
+                <td>
+                    <a href="{{ route('admin.semester.edit', $semester->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <form action="{{ route('admin.semester.destroy', $semester->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus semester ini?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                    </form>
+                </td>
+            </tr>
             @empty
-                <tr>
-                    <td colspan="2" class="text-center">Tidak ada data semester.</td>
-                </tr>
+            <tr>
+                <td colspan="4" class="text-center">Belum ada data semester.</td>
+            </tr>
             @endforelse
         </tbody>
     </table>
