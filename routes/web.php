@@ -19,7 +19,6 @@ use App\Http\Controllers\Guru\AbsensiController as GuruAbsensiController;
 use App\Http\Controllers\Guru\DashboardController as GuruDashboardController;
 
 // Guru Controllers
-
 use App\Http\Controllers\Guru\JadwalController as JadwalGuruController;
 use App\Http\Controllers\Guru\PenilaianController as GuruPenilaianController;
 use App\Http\Controllers\Siswa\AbsensiController as AbsensiSiswaController;
@@ -93,7 +92,9 @@ Route::middleware(['auth', 'role:guru'])->prefix('guru')->name('guru.')->group(f
     Route::post('penilaian', [GuruPenilaianController::class, 'store'])->name('penilaian.store');
     Route::get('penilaian/show/{id_kelas}/{jenis}', [GuruPenilaianController::class, 'show'])->name('penilaian.show');
 
-    Route::resource('absensi', GuruAbsensiController::class)->except(['destroy']);
+    Route::get('absensi', [\App\Http\Controllers\Guru\AbsensiController::class, 'index'])->name('absensi.index');
+    Route::post('absensi', [\App\Http\Controllers\Guru\AbsensiController::class, 'store']);
+    Route::put('absensi/{id}', [\App\Http\Controllers\Guru\AbsensiController::class, 'update']);
 });
 
 // =======================

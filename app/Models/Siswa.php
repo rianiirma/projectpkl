@@ -11,7 +11,6 @@ class Siswa extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id',
         'id_user',
         'id_kelas',
         'nisn',

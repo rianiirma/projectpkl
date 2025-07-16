@@ -22,4 +22,10 @@ class Kelas extends Model
     {
         return $this->belongsTo(Jurusan::class, 'id_jurusan');
     }
+
+    public function guru()
+    {
+        return $this->belongsTo(Guru::class, 'id_guru');
+    }
+
 }

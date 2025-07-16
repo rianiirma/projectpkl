@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Guru;
 
+use App\Http\Controllers\Controller;
 use App\Models\Guru;
 use App\Models\Jadwal;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Collection;
 
-class JadwalGuruController extends Controller
+class JadwalController extends Controller
 {
     public function index()
     {
@@ -18,7 +18,7 @@ class JadwalGuruController extends Controller
         $jadwals = collect();
 
         if ($guru) {
-            $jadwals = Jadwal::with(['kelas', 'mapel'])
+            $jadwals = Jadwal::with(['kelas.jurusan', 'mapel'])
                 ->where('id_guru', $guru->id)
                 ->get();
         }
